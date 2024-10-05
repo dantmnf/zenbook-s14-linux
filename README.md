@@ -47,7 +47,7 @@ Works.
 
 ### Speakers
 
-Wrong channel assignment: left channel goes to both tweeters and right channel goes to both woofers. (or vice versa, I can't clearly tell which speaker is)
+Downmixed to mono channel and fed to 4 speakers.
 
 ### Microphone Array
 
