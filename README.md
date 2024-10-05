@@ -59,6 +59,13 @@ The SOF firmware will put Windows drivers to a fu*ky state: only one of every tw
 
 To fix it, uninstall "Intel Smart Sound Techonology OED" **device** (not driver) from device manager, then click "Scan for hardware changes" to reinstall it.
 
+Or with command line:
+
+```cmd
+pnputil /remove-device /bus INTELAUDIO /subtree
+pnputil /scan-devices
+```
+
 ## GPU
 
 The open-source Intel Vulkan driver `anv` does not sound. Expect log spam and rendering errors in Vulkan applications. (and GTK4 apps)
