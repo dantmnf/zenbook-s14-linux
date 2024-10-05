@@ -53,6 +53,11 @@ Downmixed to mono channel and fed to 4 speakers.
 
 Does not work at all.
 
+### Dual-boot issues
+
+The SOF firmware will put Windows drivers to a fu*ky state: only one of every two audio sessions will have sound.
+
+To fix it, uninstall "Intel Smart Sound Techonology OED" **device** (not driver) from device manager, then click "Scan for hardware changes" to reinstall it.
 
 ## GPU
 
