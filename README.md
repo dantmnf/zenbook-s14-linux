@@ -57,13 +57,11 @@ Does not work at all.
 
 The SOF firmware will put Windows drivers to a fu*ky state: only one of every two audio sessions will have sound.
 
-To fix it, uninstall "Intel Smart Sound Techonology OED" **device** (not driver) from device manager, then click "Scan for hardware changes" to reinstall it.
-
-Or with command line:
+To fix it, disable and re-enable "Intel Smart Sound Techonology OED" in device manager, or with command line:
 
 ```cmd
-pnputil /remove-device /bus INTELAUDIO /subtree
-pnputil /scan-devices
+pnputil /disable-device /deviceid "INTELAUDIO\DSP_CTLR_DEV_A828&VEN_8086&DEV_0222&SUBSYS_1E131043"
+pnputil /enable-device /deviceid "INTELAUDIO\DSP_CTLR_DEV_A828&VEN_8086&DEV_0222&SUBSYS_1E131043"
 ```
 
 ## GPU
