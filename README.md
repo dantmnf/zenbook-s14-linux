@@ -57,12 +57,19 @@ Does not work at all.
 
 The SOF firmware will put Windows drivers to a fu*ky state: only one of every two audio sessions will have sound.
 
-To fix it, disable and re-enable "Intel Smart Sound Techonology OED" in device manager, or with command line:
+To workaround it, remove all Dolby extensions from device manager "drivers by type" view:
+
+* `IntcOED_OemLibPath_Dolby.inf`
+* `IntelStreamingExt_Dolby.inf`
+* `dax3_ext_cirrus.inf`
+
+Alternatively, disable and re-enable "Intel Smart Sound Techonology OED" in device manager each time you reboot to Windows, or with command line:
 
 ```cmd
 pnputil /disable-device /deviceid "INTELAUDIO\DSP_CTLR_DEV_A828&VEN_8086&DEV_0222&SUBSYS_1E131043"
 pnputil /enable-device /deviceid "INTELAUDIO\DSP_CTLR_DEV_A828&VEN_8086&DEV_0222&SUBSYS_1E131043"
 ```
+
 
 ## GPU
 
