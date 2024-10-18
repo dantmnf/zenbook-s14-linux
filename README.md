@@ -2,14 +2,14 @@
 
 ## Linux Enablement Overview
 
-| Component | Status |
-|-|-|
-| [CPU](#cpu) | Intermittent freezes |
-| [Bluetooth](#bluetooth) | Unreleased firmware |
-| [Audio](#audio) | Literally audible |
-| GPU | 6.12 |
-| Wi-Fi | 6.11 |
-| Keyboard backlight | 6.11 |
+| Component | Model | Status |
+|-|-|-|
+| [CPU](#cpu) | Intel Core Ultra 7 258V (Lunar Lake) | Intermittent freezes |
+| [Bluetooth](#bluetooth) | Intel BE201 (USB 8087:0037) | Missing firmware |
+| [Audio](#audio) | CS35L56/CS42L43/DMIC on SoundWire | Missing firmware / DMIC doesn't work |
+| GPU | Intel Arc Graphics 140V (PCI 8086:64a0) | 6.12 |
+| Wi-Fi | Intel BE201 (PCI 8086:a840) | 6.11 |
+| Keyboard backlight | - | 6.11 |
 
 TL;DR: Use `linux-mainline` (as of 2024-10).
 
@@ -29,7 +29,7 @@ However this may increase idle power consumption. You may want to toggle it back
 
 ## Bluetooth
 
-The firmware for the onboard BE201 module is not pushed to `linux-firmware` yet. This repo provides firmware extracted from the [Windows driver](https://www.catalog.update.microsoft.com/Search.aspx?q=%206224ef1f-f878-4665-afd7-412c8425482c).
+The firmware for the onboard BE201 module is not pushed to `linux-firmware` yet. This repo provides firmware extracted from the [Windows driver](https://www.catalog.update.microsoft.com/Search.aspx?q=6224ef1f-f878-4665-afd7-412c8425482c) in [firmware/intel](firmware/intel).
 
 In case your module is different from mine, try firmwares from the `unsorted` directory:
   - If `ibt-00*` is requested, try firmware files with `A0`.
@@ -39,7 +39,9 @@ In case your module is different from mine, try firmwares from the `unsorted` di
 
 ## Audio
 
-Install [sof-firmware](https://pkgs.org/download/sof-firmware)
+Install [sof-firmware](https://pkgs.org/search/?q=sof-lnl-cs42l43-l0-cs35l56-l23.tplg)
+
+If there is no package for your distribution, install manually from [thesofproject/sof-bin](https://github.com/thesofproject/sof-bin)
 
 ### Headphone Jack
 
@@ -47,9 +49,11 @@ Works.
 
 ### Speakers
 
-Downmixed to mono channel and fed to 4 speakers.
+The built-in default tunings will downmix stereo to mono for all 4 speakers.
 
-### Microphone Array
+Install firmware and tuning files from this repository: [firmware/cirrus](firmware/cirrus)
+
+### Microphone Array (DMIC)
 
 Does not work at all.
 
