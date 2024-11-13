@@ -41,7 +41,7 @@ Works.
 
 ### Speakers
 
-The built-in default tunings will downmix stereo to mono for all 4 speakers. Thning files for this model is available in `linux-firmware`.
+The built-in default tunings will downmix stereo to mono for all 4 speakers. Tuning files for this model is available in `linux-firmware`.
 
 ### Microphone Array (DMIC)
 
