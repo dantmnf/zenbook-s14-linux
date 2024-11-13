@@ -5,15 +5,17 @@
 | Component | Model | Status |
 |-|-|-|
 | [CPU](#cpu) | Intel Core Ultra 7 258V (Lunar Lake) | Intermittent freezes |
-| [Bluetooth](#bluetooth) | Intel BE201 (USB 8087:0037) | Missing firmware |
-| [Audio](#audio) | CS35L56/CS42L43/DMIC on SoundWire | Missing firmware / DMIC doesn't work |
+| [Audio](#audio) | CS35L56/CS42L43/DMIC on SoundWire | linux-firmware-20241110 / DMIC doesn't work |
 | GPU | Intel Arc Graphics 140V (PCI 8086:64a0) | 6.12 |
+| Bluetooth | Intel BE201 (USB 8087:0037) | linux-firmware-20241110 |
 | Wi-Fi | Intel BE201 (PCI 8086:a840) | 6.11 |
 | Keyboard backlight | - | 6.11 |
 
 TL;DR: Use `linux-mainline` (as of 2024-10).
 
 ## CPU
+
+Patch available: https://lore.kernel.org/lkml/351549432f8d766842dec74ccab443077ea0af91.1731389117.git.len.brown@intel.com/
 
 ### Workaround to intermittent freezes
 
@@ -27,16 +29,6 @@ cpupower -c 0 idle-set -d 3
 
 However this may increase idle power consumption. You may want to toggle it back before entering s2idle. ~~(left as an exercise to the reader)~~
 
-## Bluetooth
-
-The firmware for the onboard BE201 module is not pushed to `linux-firmware` yet. This repo provides firmware extracted from the [Windows driver](https://www.catalog.update.microsoft.com/Search.aspx?q=6224ef1f-f878-4665-afd7-412c8425482c) in [firmware/intel](firmware/intel).
-
-In case your module is different from mine, try firmwares from the `unsorted` directory:
-  - If `ibt-00*` is requested, try firmware files with `A0`.
-  - If `ibt-01*` is requested, try firmware files with `B0`.
-  - All of them are accompanied by the same `ddc` file (check `dmesg`).
-
-
 ## Audio
 
 Install [sof-firmware](https://pkgs.org/search/?q=sof-lnl-cs42l43-l0-cs35l56-l23.tplg)
@@ -49,9 +41,7 @@ Works.
 
 ### Speakers
 
-The built-in default tunings will downmix stereo to mono for all 4 speakers.
-
-Install firmware and tuning files from this repository: [firmware/cirrus](firmware/cirrus)
+The built-in default tunings will downmix stereo to mono for all 4 speakers. Thning files for this model is available in `linux-firmware`.
 
 ### Microphone Array (DMIC)
 
