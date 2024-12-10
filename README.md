@@ -4,22 +4,22 @@
 
 | Component | Model | Status |
 |-|-|-|
-| [CPU](#cpu) | Intel Core Ultra 7 258V (Lunar Lake) | Intermittent freezes |
+| [CPU](#cpu) | Intel Core Ultra 7 258V (Lunar Lake) | 6.13-rc2 |
 | [Audio](#audio) | CS35L56/CS42L43/DMIC on SoundWire | linux-firmware-20241110 / DMIC doesn't work |
 | GPU | Intel Arc Graphics 140V (PCI 8086:64a0) | 6.12 |
 | Bluetooth | Intel BE201 (USB 8087:0037) | linux-firmware-20241110 |
 | Wi-Fi | Intel BE201 (PCI 8086:a840) | 6.11 |
 | Keyboard backlight | - | 6.11 |
 
-TL;DR: Use `linux-mainline` (as of 2024-10).
+TL;DR: Use `linux-mainline` (as of 2024-12).
 
 ## CPU
 
-Patch available: https://lore.kernel.org/lkml/351549432f8d766842dec74ccab443077ea0af91.1731389117.git.len.brown@intel.com/
+Patch available: https://lore.kernel.org/all/a4aa8842a3c3bfdb7fe9807710eef159cbf0e705.1731463305.git.len.brown@intel.com/ (merged in 6.13-rc2)
 
 ### Workaround to intermittent freezes
 
-Disable the ACPI C3 state on a random P-core:
+In case updating or patching the kernel is not an option, disable the ACPI C3 state on a random P-core:
 
 ```bash
 echo 1 > /sys/devices/system/cpu/cpu0/cpuidle/state3/disable
