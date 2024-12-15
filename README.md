@@ -4,7 +4,7 @@
 
 | Component | Model | Status |
 |-|-|-|
-| [CPU](#cpu) | Intel Core Ultra 7 258V (Lunar Lake) | 6.13-rc2 |
+| [CPU](#cpu) | Intel Core Ultra 7 258V (Lunar Lake) | 6.12.5 |
 | [Audio](#audio) | CS35L56/CS42L43/DMIC on SoundWire | linux-firmware-20241110 / DMIC doesn't work |
 | GPU | Intel Arc Graphics 140V (PCI 8086:64a0) | 6.12 |
 | Bluetooth | Intel BE201 (USB 8087:0037) | linux-firmware-20241110 |
@@ -15,7 +15,7 @@ TL;DR: Use `linux-mainline` (as of 2024-12).
 
 ## CPU
 
-Patch available: https://lore.kernel.org/all/a4aa8842a3c3bfdb7fe9807710eef159cbf0e705.1731463305.git.len.brown@intel.com/ (merged in 6.13-rc2)
+Patch available: https://lore.kernel.org/all/a4aa8842a3c3bfdb7fe9807710eef159cbf0e705.1731463305.git.len.brown@intel.com/ (merged in 6.13-rc2/6.12.5)
 
 ### Workaround to intermittent freezes
 
