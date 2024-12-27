@@ -49,6 +49,9 @@ Does not work at all.
 
 ### Dual-boot issues
 
+> [!NOTE]
+> The latest Intel audio driver (20.42.11515.0) from Windows Update seems to have this issue fixed.
+
 The SOF firmware will put Windows drivers to a fu*ky state: only one of every two audio sessions will have sound.
 
 To workaround it, remove all Dolby extensions from device manager "drivers by type" view:
