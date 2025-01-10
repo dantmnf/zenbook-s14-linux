@@ -10,6 +10,7 @@
 | Bluetooth | Intel BE201 (USB 8087:0037) | linux-firmware-20241110 |
 | Wi-Fi | Intel BE201 (PCI 8086:a840) | 6.11 |
 | Keyboard backlight | - | 6.11 |
+| [USB Type-A Port](#USB) | - | Unstable connection |
 
 TL;DR: Use kernel 6.12.5 or later.
 
@@ -60,6 +61,20 @@ Tracking in https://github.com/thesofproject/sof/issues/9759
   options snd_soc_sof_sdw quirk=0x20041
   options snd_sof_pci tplg_filename=sof-lnl-cs42l43-l0-cs35l56-l23-2ch.tplg
   ```
+
+### USB
+
+Unstable USB connection under certain conditions:
+
+| Port | Device | Chained Devices | Connection Quality |
+|-|-|-|-|
+| USB-A Port | JMS583 disk enclosure | | Unstable |
+| USB-A Port | RTL8156 NIC | | Unstable |
+| USB-C Port | USB-C to USB-A adapter (passive) | JMS583 or RTL8156 | Stable |
+| USB-A Port | USB 3.0 (5 Gbps) Hub | JMS583 __or__ RTL8156 | Unstable |
+| USB-A Port | USB 3.0 (5 Gbps) Hub | JMS583 __and__ RTL8156 | Stable |
+
+No connection issues observed on Windows, further investigation in progress.
 
 ### Dual-boot issues
 
