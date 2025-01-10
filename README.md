@@ -5,13 +5,13 @@
 | Component | Model | Status |
 |-|-|-|
 | [CPU](#cpu) | Intel Core Ultra 7 258V (Lunar Lake) | 6.12.5 |
-| [Audio](#audio) | CS35L56/CS42L43/DMIC on SoundWire | linux-firmware-20241110 / DMIC doesn't work |
+| [Audio](#audio) | CS35L56/CS42L43/DMIC on SoundWire | linux-firmware-20241110 / DMIC with quirks |
 | GPU | Intel Arc Graphics 140V (PCI 8086:64a0) | 6.12 |
 | Bluetooth | Intel BE201 (USB 8087:0037) | linux-firmware-20241110 |
 | Wi-Fi | Intel BE201 (PCI 8086:a840) | 6.11 |
 | Keyboard backlight | - | 6.11 |
 
-TL;DR: Use `linux-mainline` (as of 2024-12).
+TL;DR: Use kernel 6.12.5 or later.
 
 ## CPU
 
@@ -45,7 +45,21 @@ The built-in default tunings will downmix stereo to mono for all 4 speakers. Tun
 
 ### Microphone Array (DMIC)
 
-Does not work at all.
+Tracking in https://github.com/thesofproject/sof/issues/9759
+
+#### Before necessary patches merged in upstream
+
+* Replace `/usr/share/alsa/ucm2/sof-soundwire/cs42l43.conf` with latest version from https://github.com/alsa-project/alsa-ucm-conf/blob/master/ucm2/sof-soundwire/cs42l43.conf
+* Place the [topolofy file](firmware/intel/sof-ipc4-tplg/sof-lnl-cs42l43-l0-cs35l56-l23-2ch.tplg) in `/lib/firmware/intel/sof-ipc4-tplg` (from https://github.com/thesofproject/sof/issues/9759#issuecomment-2579557511)
+* Add module parameters override in `/etc/modprobe.d/ux5406-dmic.conf`
+  ```
+  # quirk=RT711_JD1|SOC_SDW_PCH_DMIC|SOC_SDW_CODEC_MIC
+  # RT711_JD1: default quirk value
+  # SOC_SDW_PCH_DMIC: force enumerate DMIC connected to PCH
+  # SOC_SDW_CODEC_MIC: don't enumerate DMIC connected to SoundWire CODEC
+  options snd_soc_sof_sdw quirk=0x20041
+  options snd_sof_pci tplg_filename=sof-lnl-cs42l43-l0-cs35l56-l23-2ch.tplg
+  ```
 
 ### Dual-boot issues
 
