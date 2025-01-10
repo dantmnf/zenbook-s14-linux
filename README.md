@@ -68,13 +68,13 @@ Unstable USB connection under certain conditions:
 
 | Port | Device | Chained Devices | Connection Quality |
 |-|-|-|-|
-| USB-A Port | JMS583 disk enclosure | | Unstable |
-| USB-A Port | RTL8156 NIC | | Unstable |
+| USB-A Port | JMS583 disk enclosure | | Unstable (I/O timeout on LBA 0) |
+| USB-A Port | RTL8156 NIC | | Unstable (frequent device reset) |
 | USB-C Port | USB-C to USB-A adapter (passive) | JMS583 or RTL8156 | Stable |
 | USB-A Port | USB 3.0 (5 Gbps) Hub | JMS583 __or__ RTL8156 | Unstable |
 | USB-A Port | USB 3.0 (5 Gbps) Hub | JMS583 __and__ RTL8156 | Stable |
 
-No connection issues observed on Windows, further investigation in progress.
+No connection issues were observed on Windows, further investigation in progress.
 
 ### Dual-boot issues
 
