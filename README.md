@@ -50,7 +50,7 @@ Tracking in https://github.com/thesofproject/sof/issues/9759
 #### Before necessary patches merged in upstream
 
 * Replace `/usr/share/alsa/ucm2/sof-soundwire/cs42l43.conf` with latest version from https://github.com/alsa-project/alsa-ucm-conf/blob/master/ucm2/sof-soundwire/cs42l43.conf
-* Place the [topolofy file](firmware/intel/sof-ipc4-tplg/sof-lnl-cs42l43-l0-cs35l56-l23-2ch.tplg) in `/lib/firmware/intel/sof-ipc4-tplg` (from https://github.com/thesofproject/sof/issues/9759#issuecomment-2579557511)
+* Place the [topology file](firmware/intel/sof-ipc4-tplg/sof-lnl-cs42l43-l0-cs35l56-l23-2ch.tplg) in `/lib/firmware/intel/sof-ipc4-tplg` (from https://github.com/thesofproject/sof/issues/9759#issuecomment-2579557511)
 * Add module parameters override in `/etc/modprobe.d/ux5406-dmic.conf`
   ```
   # quirk=RT711_JD1|SOC_SDW_PCH_DMIC|SOC_SDW_CODEC_MIC
