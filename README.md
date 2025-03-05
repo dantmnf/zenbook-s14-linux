@@ -10,7 +10,7 @@
 | Bluetooth | Intel BE201 (USB 8087:0037) | linux-firmware-20241110 |
 | Wi-Fi | Intel BE201 (PCI 8086:a840) | 6.11 |
 | Keyboard backlight | - | 6.11 |
-| [USB Type-A Port](#USB) | - | Unstable connection |
+| [USB Type-A Port](#USB) | - | LPM may cause issues for buggy devices |
 
 TL;DR: Use kernel 6.12.5 or later.
 
@@ -52,6 +52,7 @@ Tracking in https://github.com/thesofproject/sof/issues/9759
 
 * Replace `/usr/share/alsa/ucm2/sof-soundwire/cs42l43.conf` with latest version from https://github.com/alsa-project/alsa-ucm-conf/blob/master/ucm2/sof-soundwire/cs42l43.conf
 * Place the [topology file](firmware/intel/sof-ipc4-tplg/sof-lnl-cs42l43-l0-cs35l56-l23-2ch.tplg) in `/lib/firmware/intel/sof-ipc4-tplg` (from https://github.com/thesofproject/sof/issues/9759#issuecomment-2579557511)
+  * CAUTION: This topology file will NOT work on kernel 6.14 or later. Build the topology file from upstream sof repo if you are on such newer kernel.
 * Add module parameters override in `/etc/modprobe.d/ux5406-dmic.conf`
   ```
   # quirk=RT711_JD1|SOC_SDW_PCH_DMIC|SOC_SDW_CODEC_MIC
@@ -61,20 +62,13 @@ Tracking in https://github.com/thesofproject/sof/issues/9759
   options snd_soc_sof_sdw quirk=0x20041
   options snd_sof_pci tplg_filename=sof-lnl-cs42l43-l0-cs35l56-l23-2ch.tplg
   ```
+* Kernel-side change (seems) targeted 6.15
 
 ### USB
 
-Unstable USB connection under certain conditions:
+The USB-A port supports USB 3.0 link power management (LPM), you may encounter issues with buggy devices (e.g. RTL8156).
 
-| Port | Device | Chained Devices | Connection Quality |
-|-|-|-|-|
-| USB-A Port | JMS583 disk enclosure | | Unstable (I/O timeout on LBA 0) |
-| USB-A Port | RTL8156 NIC | | Unstable (frequent device reset) |
-| USB-C Port | USB-C to USB-A adapter (passive) | JMS583 or RTL8156 | Stable |
-| USB-A Port | USB 3.0 (5 Gbps) Hub | JMS583 __or__ RTL8156 | Unstable |
-| USB-A Port | USB 3.0 (5 Gbps) Hub | JMS583 __and__ RTL8156 | Stable |
-
-No connection issues were observed on Windows, further investigation in progress.
+To workaround, add `usbcore.quirks=vid:pid:k` to kernel command line (like `usbcore.quirks=0bda:8156:k`)
 
 ### Dual-boot issues
 
