@@ -63,6 +63,15 @@ Tracking in https://github.com/thesofproject/sof/issues/9759
   options snd_sof_pci tplg_filename=sof-lnl-cs42l43-l0-cs35l56-l23-2ch.tplg
   ```
 * Kernel-side change (seems) targeted 6.15
+* An [rpm .spec file](zenbook-s14-dmic.spec) is provided for Fedora Atomic desktop users.  
+  Build with:
+  ```
+  rpmbuild -bb zenbook-s14-dmic.spec
+  ```
+  and install the resulting rpm with:
+  ```
+  sudo rpm-ostree install --force-replacefiles $HOME/rpmbuild/RPMS/$(uname -m)/zenbook-s14-dmic-*.rpm
+  ```
 
 ### USB
 
