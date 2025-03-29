@@ -19,8 +19,15 @@ BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-BuildRoot
 
 
 %build
-wget "https://raw.githubusercontent.com/alsa-project/alsa-ucm-conf/refs/heads/master/ucm2/sof-soundwire/cs42l43.conf"
-wget "https://github.com/dantmnf/zenbook-s14-linux/raw/refs/heads/master/firmware/intel/sof-ipc4-tplg/sof-lnl-cs42l43-l0-cs35l56-l23-2ch.tplg"
+wget "https://github.com/alsa-project/alsa-ucm-conf/raw/refs/heads/master/ucm2/sof-soundwire/cs42l43.conf"
+
+# check kernel version to see if we need a different topology
+if ((echo "$(uname -r|cut -c1-4) >= 6.14" | bc -l)); then
+    wget "https://github.com/dantmnf/zenbook-s14-linux/raw/refs/heads/master/firmware/intel/sof-ipc4-tplg/sof-lnl-cs42l43-l0-cs35l56-l23-2ch.tplg"
+else
+    wget "https://github.com/dantmnf/zenbook-s14-linux/raw/refs/heads/master/firmware/intel/sof-ipc4-tplg/sof-lnl-cs42l43-l0-cs35l56-l23-2ch.tplg.KERNEL614" -O sof-lnl-cs42l43-l0-cs35l56-l23-2ch.tplg
+fi
+
 echo "\
 # quirk=RT711_JD1|SOC_SDW_PCH_DMIC|SOC_SDW_CODEC_MIC
 # RT711_JD1: default quirk value
