@@ -52,7 +52,7 @@ Tracking in https://github.com/thesofproject/sof/issues/9759
 
 * Replace `/usr/share/alsa/ucm2/sof-soundwire/cs42l43.conf` with latest version from https://github.com/alsa-project/alsa-ucm-conf/blob/master/ucm2/sof-soundwire/cs42l43.conf
 * Place the [topology file](firmware/intel/sof-ipc4-tplg/sof-lnl-cs42l43-l0-cs35l56-l23-2ch.tplg) in `/lib/firmware/intel/sof-ipc4-tplg` (from https://github.com/thesofproject/sof/issues/9759#issuecomment-2579557511)
-  * CAUTION: This topology file will NOT work on kernel 6.14 or later. Build the topology file from upstream sof repo if you are on such newer kernel.
+  * CAUTION: This topology file will NOT work on kernel 6.14 or later. A [topology file](firemware/intel/sof-ipc4-tplg/sof-lnl-cs42l43-l0-cs35l56-l23-2ch.tplg.KERNEL614) compiled on kernel 6.14 is provided as well, but will have to be renamed.
 * Add module parameters override in `/etc/modprobe.d/ux5406-dmic.conf`
   ```
   # quirk=RT711_JD1|SOC_SDW_PCH_DMIC|SOC_SDW_CODEC_MIC
