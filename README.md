@@ -11,7 +11,7 @@
 | Wi-Fi | Intel BE201 (PCI 8086:a840) | 6.11 |
 | Keyboard backlight | - | 6.11 |
 | [USB Type-A Port](#USB) | - | LPM may cause issues for buggy devices |
-| Sensors | - | [not working](https://github.com/dantmnf/zenbook-s14-linux/issues/5) |
+| [Sensors](#Sensors) | - | external firmware |
 
 TL;DR: Use kernel 6.12.5 or later.
 
@@ -73,18 +73,22 @@ Tracking in https://github.com/thesofproject/sof/issues/9759
   sudo rpm-ostree install --force-replacefiles $HOME/rpmbuild/RPMS/$(uname -m)/zenbook-s14-dmic-*.rpm
   ```
 
-### USB
-
-The USB-A port supports USB 3.0 link power management (LPM), you may encounter issues with buggy devices (e.g. RTL8156).
-
-To workaround, add `usbcore.quirks=vid:pid:k` to kernel command line (like `usbcore.quirks=0bda:8156:k`)
-
 ### Dual-boot issues
 
 > [!NOTE]
 > The latest Intel audio driver (20.42.11515.0) from Windows Update seems to have this issue fixed.
 
 The SOF firmware will put old Windows drivers to a fu*ky state: only one of every two audio sessions will have sound.
+
+## USB
+
+The USB-A port supports USB 3.0 link power management (LPM), you may encounter issues with buggy devices (e.g. RTL8156).
+
+To workaround, add `usbcore.quirks=vid:pid:k` to kernel command line (like `usbcore.quirks=0bda:8156:k`)
+
+## Sensors
+
+Use [firmware file](firmware/intel/ish/ish_lnlm_ef534c00_fb3b8d86.bin) from this repo. (extracted from SensorHub_DCH_Intel_Z_V5.8.36.0Sub1_42507_20250414204747/IshHeciExtensionTemplate/FWImage/0003/AsusSign_ishS_SI_CommonLNL_5.8.0.7716_v0002.bin)
 
 ## GPU
 
