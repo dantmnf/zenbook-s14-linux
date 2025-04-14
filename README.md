@@ -11,6 +11,7 @@
 | Wi-Fi | Intel BE201 (PCI 8086:a840) | 6.11 |
 | Keyboard backlight | - | 6.11 |
 | [USB Type-A Port](#USB) | - | LPM may cause issues for buggy devices |
+| Sensors | - | [not working](https://github.com/dantmnf/zenbook-s14-linux/issues/5) |
 
 TL;DR: Use kernel 6.12.5 or later.
 
@@ -32,7 +33,7 @@ However this may increase idle power consumption. You may want to toggle it back
 
 ## Audio
 
-Install [sof-firmware](https://pkgs.org/search/?q=sof-lnl-cs42l43-l0-cs35l56-l23.tplg)
+Install [sof-firmware](https://pkgs.org/search/?q=sof-lnl-cs42l43-l0-cs35l56-l23-2ch.tplg)
 
 If there is no package for your distribution, install manually from [thesofproject/sof-bin](https://github.com/thesofproject/sof-bin)
 
@@ -51,8 +52,8 @@ Tracking in https://github.com/thesofproject/sof/issues/9759
 #### Before necessary patches merged in upstream
 
 * Replace `/usr/share/alsa/ucm2/sof-soundwire/cs42l43.conf` with latest version from https://github.com/alsa-project/alsa-ucm-conf/blob/master/ucm2/sof-soundwire/cs42l43.conf
-* Place the [topology file](firmware/intel/sof-ipc4-tplg/sof-lnl-cs42l43-l0-cs35l56-l23-2ch.tplg) in `/lib/firmware/intel/sof-ipc4-tplg` (from https://github.com/thesofproject/sof/issues/9759#issuecomment-2579557511)
-  * CAUTION: This topology file will NOT work on kernel 6.14 or later. A [topology file](firemware/intel/sof-ipc4-tplg/sof-lnl-cs42l43-l0-cs35l56-l23-2ch.tplg.KERNEL614) compiled on kernel 6.14 is provided as well, but will have to be renamed.
+* If you are using kernel before 6.14, use the [topology file from this repo](firmware/intel/sof-ipc4-tplg/sof-lnl-cs42l43-l0-cs35l56-l23-2ch.tplg)
+  - The upstream topology is for 6.14+
 * Add module parameters override in `/etc/modprobe.d/ux5406-dmic.conf`
   ```
   # quirk=RT711_JD1|SOC_SDW_PCH_DMIC|SOC_SDW_CODEC_MIC
@@ -85,19 +86,6 @@ To workaround, add `usbcore.quirks=vid:pid:k` to kernel command line (like `usbc
 > The latest Intel audio driver (20.42.11515.0) from Windows Update seems to have this issue fixed.
 
 The SOF firmware will put Windows drivers to a fu*ky state: only one of every two audio sessions will have sound.
-
-To workaround it, remove all Dolby extensions from device manager "drivers by type" view:
-
-* `IntcOED_OemLibPath_Dolby.inf`
-* `IntelStreamingExt_Dolby.inf`
-* `dax3_ext_cirrus.inf`
-
-Alternatively, disable and re-enable "Intel Smart Sound Techonology OED" in device manager each time you reboot to Windows, or with command line:
-
-```cmd
-pnputil /disable-device /deviceid "INTELAUDIO\DSP_CTLR_DEV_A828&VEN_8086&DEV_0222&SUBSYS_1E131043"
-pnputil /enable-device /deviceid "INTELAUDIO\DSP_CTLR_DEV_A828&VEN_8086&DEV_0222&SUBSYS_1E131043"
-```
 
 
 ## GPU
