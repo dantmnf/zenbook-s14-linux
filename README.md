@@ -73,6 +73,21 @@ Tracking in https://github.com/thesofproject/sof/issues/9759
   sudo rpm-ostree install --force-replacefiles $HOME/rpmbuild/RPMS/$(uname -m)/zenbook-s14-dmic-*.rpm
   ```
 
+#### Updating from kernels without upstream patches to newer ones with patches
+
+In case you have followed all the steps above, but now you are upgrading to a newer kernel version (see Audio component [in this table](#linux-enablement-overview)), you will most probably encounter an issue where audio stops working entirely - both speakers and microphones.
+
+To resolve this without full system reinstall, you simply need to undo steps [above](#before-necessary-patches-merged-in-upstream), specifically:
+
+* Reinstall `alsa-ucm` (or `alsa-lib` completely if you want), `sof-firmware`, `linux-firmware` to their latest versions. 
+  - Example for Fedora: `sudo dnf reinstall alsa-ucm alsa-sof-firmware linux-firmware`.
+
+* Remove the `sof-lnl-cs42l43-l0-cs35l56-l23-2ch.tplg` from `/lib/firmware/intel/sof-ipc4-tplg/`. Make sure that file with the same name but a `.tplg.xz` extension exists.
+
+* Completely remove the `/etc/modprobe.d/ux5406-dmic.conf` file.
+
+* Custom `cs42l43.conf` should be replaced automatically on packages reinstall.
+
 ### Dual-boot issues
 
 > [!NOTE]
