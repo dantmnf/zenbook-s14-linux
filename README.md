@@ -13,7 +13,7 @@
 | [USB Type-A Port](#USB) | - | LPM may cause issues for buggy devices |
 | [Sensors](#Sensors) | - | external firmware |
 
-TL;DR: Use kernel 6.12.5 or later.
+TL;DR: Fedora 42 with updates contains all necessary kernel and firmware changes (except sensors). Check package version against Fedora if you prefer another distro.
 
 ## CPU
 
